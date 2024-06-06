@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'home.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,14 +40,16 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    final response = await http.post(
-      Uri.parse('https://your-auth-server.com/login'),
+
+    /*final response = await http.post(
+      Uri.parse('https://p7y0pin0cl.execute-api.us-east-2.amazonaws.com/default/AdminPanelLogin'),
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
+        
       },
       body: jsonEncode(<String, String>{
-        'username': username,
-        'password': password,
+        "username": username,
+        "password": password,
       }),
     );
 
@@ -57,6 +61,18 @@ class _LoginPageState extends State<LoginPage> {
       // If the server did not return a 200 OK response, print an error message
       print('Failed to login: ${response.statusCode}');
     }
+    */
+
+    final String token = 'test_token';
+    print('Login successful: $token');
+    final DateTime now = DateTime.now();
+    final DateTime expiryDate = now.add(Duration(days: 14));
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
+    await prefs.setString('expiryDate', expiryDate.toIso8601String());
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+
   }
 
 void _showErrorDialog(String message) {

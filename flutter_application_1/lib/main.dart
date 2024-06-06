@@ -1,105 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/login.dart';
+import 'screens/home.dart';
+import 'theme.dart';
 
 void main() {
   runApp(MyApp());
 }
-
-final ThemeData lightTheme =  ThemeData(
-  useMaterial3: true,
-  primaryColor: Color.fromARGB(255, 179, 227, 220),
-  colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.blue,
-      // ···
-      brightness: Brightness.light,
-  ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: const Color(0xFFABE0D8), // Set light theme background color
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: const Color.fromARGB(255, 48, 214, 198),
-    ),
-    
-  ),
-  scaffoldBackgroundColor:Colors.white,
-  cardColor: Color(0xFFe4f5f2),
-  textTheme: TextTheme(
-    //Body Small
-     bodySmall:GoogleFonts.montserrat(
-       fontSize: 13,fontWeight: FontWeight.w600, color: Colors.yellow),
-                
-    //Body Medium
-      bodyMedium: GoogleFonts.montserrat(
-       fontSize: 20, color: Color.fromARGB(255, 11, 1, 58), fontWeight: FontWeight.w700),
-
-    //Body Large
-      bodyLarge: GoogleFonts.aBeeZee(
-        fontSize: 26,  fontWeight: FontWeight.w800, color: const Color.fromARGB(255, 121, 121, 121)),
-
-        ),
-
-        inputDecorationTheme: InputDecorationTheme(
-    filled: true,
-    fillColor: Color.fromARGB(255, 179, 227, 220), // Change the background color here
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10.0),
-      borderSide: BorderSide.none, // Remove the border side
-    ),
-
-  ),
-      );
-
-  
-
-
-final ThemeData darkTheme = ThemeData(
-  useMaterial3: true,
-  primaryColor: Color(0xFF004759),
-  colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.blue,
-      // ···
-      brightness: Brightness.dark,
-  ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: Color(0xFF004759), // Set light theme background color
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor:  Color.fromARGB(255, 5, 13, 84),
-    ),
-    
-
-
-  ),
-  scaffoldBackgroundColor:Color(0xFF0D233A),
-  cardColor: Color(0xFF042D40),
-    textTheme: TextTheme(
-    //Body Small
-     bodySmall:GoogleFonts.montserrat(
-       fontSize: 13,fontWeight: FontWeight.w600, color: Colors.red),
-                
-    //Body Medium
-      bodyMedium: GoogleFonts.montserrat(
-       fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700),
-
-    //Body Large
-      bodyLarge: GoogleFonts.aBeeZee(
-        fontSize: 26,  fontWeight: FontWeight.w800, color: Colors.white),
-
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-    filled: true,
-    fillColor: Color(0xFF004759), // Change the background color here
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10.0),
-      borderSide: BorderSide.none, // Remove the border side
-    ),
-  ),
- 
-);
 
 
 class MyApp extends StatelessWidget {
@@ -111,6 +20,40 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
       home: ThemeTogglePage(),
+    );
+  }
+}
+
+class InitialScreen extends StatefulWidget {
+  @override
+  _InitialScreenState createState() => _InitialScreenState();
+}
+
+class _InitialScreenState extends State<InitialScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _checkToken();
+  }
+
+  Future<void> _checkToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    String? expiryDateStr = prefs.getString('expiryDate');
+
+    if (token != null && expiryDateStr != null) {
+      DateTime expiryDate = DateTime.parse(expiryDateStr);
+      if (DateTime.now().isBefore(expiryDate)) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+        return;
+      }
+    }
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }
@@ -139,10 +82,10 @@ class _ThemeTogglePageState extends State<ThemeTogglePage> {
             title: Row(
             children: [
               Image.asset(
-                'assets/cubtale logo1.png', // Ensure you have a logo image in the assets folder
-                height: 60, // Adjust the height as needed
+                'assets/cubtale logo1.png',
+                height: 60, 
               ),
-              SizedBox(width: 10), // Adjust spacing as needed
+              SizedBox(width: 10),
               Image.asset('assets/Cubtale watermark.png', height: 60)
             ],
           ),
