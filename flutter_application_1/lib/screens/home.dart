@@ -1,66 +1,100 @@
 import 'package:flutter/material.dart';
 import '../home_bar.dart';
+import 'search_email.dart';
+import 'search_id.dart';
+import 'search_date.dart';
 
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
+  bool isHorizontal = true;
 
-class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
-      toolbarHeight: 100,
-      title: Row(
-        children: [
-          Image.asset(
-            'assets/cubtale logo1.png', // Replace with your logo path
-            height: 60,
-          ),
-          SizedBox(width: 10),
-          // Consider using a single image for both logos
-          // if they have the same design
-          Image.asset(
-            'assets/Cubtale watermark.png', // Replace with your watermark path
-            height: 60,
-          ),
-          SizedBox(width:500),
-          Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        toolbarHeight: 100,
+        title: Row(
           children: [
-            TextButton(
-              onPressed: () {
-                // Add functionality as needed
-              },
-              child: Text('Button 1'),
+            Image.asset(
+              'assets/cubtale logo1.png', // Replace with your logo path
+              height: 60,
             ),
-            SizedBox(width: 10), // Spacing between buttons
-            TextButton(
-              onPressed: () {
-                // Add functionality as needed
-              },
-              child: Text('Button 2'),
+            SizedBox(width: 10),
+            Image.asset(
+              'assets/Cubtale watermark.png', // Replace with your watermark path
+              height: 60,
             ),
-            SizedBox(width: 10), // Spacing between buttons
-            TextButton(
-              onPressed: () {
-                // Add functionality as needed
-              },
-              child: Text('Button 3'),
+            SizedBox(width: 500),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchByMail()));
+                  },
+                  child: Text(
+                    'Search By Mail',
+                    style: TextStyle(
+                        color: Colors.teal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+                Image.asset('assets/vertical_divider.png', width: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => SearchById()));
+                  },
+                  child: Text(
+                    'Search By ID',
+                    style: TextStyle(
+                        color: Colors.teal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+                Image.asset('assets/vertical_divider.png', width: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchByDate()));
+                  },
+                  child: Text(
+                    'Search By Date',
+                    style: TextStyle(
+                        color: Colors.teal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-        // Dropdown menu button (replace with your dropdown widget)
-        
+        actions: [
+          IconButton(
+            icon: isHorizontal
+                ? CustomThreeLinesIcon()
+                : CustomThreeLinesIcon(),
+            onPressed: () {
+              setState(() {
+                isHorizontal = !isHorizontal;
+              });
+              showCustomMenu(context);
+            },
+          ),
         ],
       ),
-      actions:[IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            // Add functionality as needed
-          },
-        ),]
-
-    ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: GridView.count(
@@ -82,6 +116,67 @@ class HomePage extends StatelessWidget {
             InfoCard(title: 'Dummy Card 2', content: Container()),
             InfoCard(title: 'Dummy Card 3', content: Container()),
           ],
+        ),
+      ),
+    );
+  }
+
+  void showCustomMenu(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Custom Menu'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset('assets/cubtale logo1.png', height: 60),
+              SizedBox(height: 10),
+              Text('Additional information'),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class CustomThreeLinesIcon extends StatefulWidget {
+  @override
+  _CustomThreeLinesIconState createState() => _CustomThreeLinesIconState();
+}
+
+class _CustomThreeLinesIconState extends State<CustomThreeLinesIcon> {
+  double rotationAngle = 0.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          rotationAngle = rotationAngle == 0.0 ? 1.5708 : 0.0;
+        });
+      },
+      child: Transform.rotate(
+        angle: rotationAngle, // Rotate 90 degrees if rotationAngle is 1.5708
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(3, (index) {
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 2.0),
+              height: 4.0,
+              width: 24.0,
+              color: Colors.teal,
+            );
+          }),
         ),
       ),
     );
@@ -137,9 +232,9 @@ class UserRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(name, style: TextStyle(color: Colors.white,fontSize: 8)),
-          Text(email, style: TextStyle(color: Colors.white,fontSize: 8)),
-          Icon(Icons.arrow_forward_ios, color: Colors.white,size: 8),
+          Text(name, style: TextStyle(color: Colors.white, fontSize: 8)),
+          Text(email, style: TextStyle(color: Colors.white, fontSize: 8)),
+          Icon(Icons.arrow_forward_ios, color: Colors.white, size: 8),
         ],
       ),
     );
