@@ -4,25 +4,16 @@ import 'package:flutter/widgets.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'home.dart';
+import '../login_bar.dart';
+import '../theme.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Login Demo',
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.system,
-      home: LoginPage(),
-    );
-  }
-}
 
 class LoginPage extends StatefulWidget {
+  final bool isDarkTheme;
+  final VoidCallback onToggleTheme;
+
+  LoginPage({required this.isDarkTheme, required this.onToggleTheme});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -30,6 +21,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
 
   void _login() async {
     final String username = _usernameController.text;
@@ -140,11 +132,15 @@ void _showErrorDialog(String message) {
 }
 
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        isDarkTheme: widget.isDarkTheme,
+        onToggleTheme: widget.onToggleTheme,
+      ),
       body: Container(
-        color: Theme.of(context).scaffoldBackgroundColor, // Set the background color
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Center(
           child: Container(
             padding: EdgeInsets.all(16.0),
@@ -154,7 +150,7 @@ void _showErrorDialog(String message) {
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(32.0),
               boxShadow: const [
-                 BoxShadow(
+                BoxShadow(
                   color: Colors.black26,
                   blurRadius: 10.0,
                   offset: Offset(0, 5),
@@ -167,32 +163,33 @@ void _showErrorDialog(String message) {
               children: [
                 const Align(
                   alignment: Alignment.centerLeft,
-                  child:Text('UserName',style: TextStyle(fontSize: 20))),
+                  child: Text('UserName', style: TextStyle(fontSize: 20)),
+                ),
                 TextField(
                   controller: _usernameController,
                 ),
                 const SizedBox(height: 20),
-                 Align(alignment: Alignment.centerLeft,
-                child:  Text('Password',style:Theme.of(context).textTheme.bodyMedium)),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Password', style: Theme.of(context).textTheme.bodyMedium),
+                ),
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
-                 
                 ),
                 const SizedBox(height: 40),
                 Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     onPressed: _login,
-                    child:  Text('Login',style:Theme.of(context).textTheme.bodyLarge),
-                     style: ElevatedButton.styleFrom(
-    fixedSize: Size(200, 70),
-    backgroundColor: Theme.of(context).primaryColor,
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0), // Adjust the border radius here
-      ),
-  ),  
-
+                    child: Text('Login', style: Theme.of(context).textTheme.bodyLarge),
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(200, 70),
+                      backgroundColor: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
                   ),
                 ),
               ],

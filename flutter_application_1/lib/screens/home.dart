@@ -1,29 +1,68 @@
 import 'package:flutter/material.dart';
+import '../home_bar.dart';
 
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Web Layout',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
-      home: HomePage(),
-    );
-  }
-}
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
+      appBar: AppBar(
+      toolbarHeight: 100,
+      title: Row(
+        children: [
+          Image.asset(
+            'assets/cubtale logo1.png', // Replace with your logo path
+            height: 60,
+          ),
+          SizedBox(width: 10),
+          // Consider using a single image for both logos
+          // if they have the same design
+          Image.asset(
+            'assets/Cubtale watermark.png', // Replace with your watermark path
+            height: 60,
+          ),
+          SizedBox(width:500),
+          Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                // Add functionality as needed
+              },
+              child: Text('Button 1'),
+            ),
+            SizedBox(width: 10), // Spacing between buttons
+            TextButton(
+              onPressed: () {
+                // Add functionality as needed
+              },
+              child: Text('Button 2'),
+            ),
+            SizedBox(width: 10), // Spacing between buttons
+            TextButton(
+              onPressed: () {
+                // Add functionality as needed
+              },
+              child: Text('Button 3'),
+            ),
+          ],
+        ),
+        // Dropdown menu button (replace with your dropdown widget)
+        
+        ],
+      ),
+      actions:[IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            // Add functionality as needed
+          },
+        ),]
+
+    ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(10.0),
         child: GridView.count(
           crossAxisCount: 2,
           crossAxisSpacing: 16.0,
