@@ -9,7 +9,7 @@ final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
   ),
   appBarTheme: AppBarTheme(
-    backgroundColor: const Color(0xFFABE0D8), // Set light theme background color
+    backgroundColor: const Color(0xFFABE0D8), 
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(

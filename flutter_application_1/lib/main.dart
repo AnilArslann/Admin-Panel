@@ -15,7 +15,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isDarkTheme = false;
+  bool _isDarkTheme = (ThemeMode.system==ThemeMode.dark);
+  bool _isLoggedIn = false;
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    setState(() {
+      _isLoggedIn = token != null;
+    });
+  }
+
 
   void _toggleTheme() {
     setState(() {
@@ -30,7 +45,7 @@ class _MyAppState extends State<MyApp> {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: _isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-      home: LoginPage(
+      home: _isLoggedIn? HomePage():LoginPage(
         isDarkTheme: _isDarkTheme,
         onToggleTheme: _toggleTheme,
       ),

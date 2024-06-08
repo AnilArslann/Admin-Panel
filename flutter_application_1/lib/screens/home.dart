@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../home_bar.dart';
+import 'login.dart';
 import 'search_email.dart';
 import 'search_id.dart';
 import 'search_date.dart';
@@ -11,6 +14,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isHorizontal = true;
+  
+
+  Future<void> _logout(BuildContext context) async {
+    bool _isDarkTheme = (ThemeMode.system==ThemeMode.dark);
+    void _toggleTheme() {
+    setState(() {
+      _isDarkTheme = !_isDarkTheme;
+    });
+  }
+    // Delete the token from local storage
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    await prefs.remove('expiryDate');
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(isDarkTheme: (ThemeMode.system==ThemeMode.dark), onToggleTheme: (){})));
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,89 +38,148 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         toolbarHeight: 100,
         title: Row(
-          children: [
-            Image.asset(
-              'assets/cubtale logo1.png', // Replace with your logo path
-              height: 60,
-            ),
-            SizedBox(width: 10),
-            Image.asset(
-              'assets/Cubtale watermark.png', // Replace with your watermark path
-              height: 60,
-            ),
-            SizedBox(width: 500),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SearchByMail()));
-                  },
-                  child: Text(
-                    'Search By Mail',
-                    style: TextStyle(
-                        color: Colors.teal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                ),
-                Image.asset('assets/vertical_divider.png', width: 10),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => SearchById()));
-                  },
-                  child: Text(
-                    'Search By ID',
-                    style: TextStyle(
-                        color: Colors.teal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                ),
-                Image.asset('assets/vertical_divider.png', width: 10),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SearchByDate()));
-                  },
-                  child: Text(
-                    'Search By Date',
-                    style: TextStyle(
-                        color: Colors.teal,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: isHorizontal
-                ? CustomThreeLinesIcon()
-                : CustomThreeLinesIcon(),
-            onPressed: () {
-              setState(() {
-                isHorizontal = !isHorizontal;
-              });
-              showCustomMenu(context);
-            },
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Row(
+        children: [
+          Image.asset(
+            'assets/cubtale logo1.png',
+            height: 60,
+          ),
+          SizedBox(width: 10),
+          Image.asset(
+            'assets/Cubtale watermark.png',
+            height: 60,
           ),
         ],
       ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => SearchByMail()),
+              );
+            },
+            child: Text('Search By Mail', style: TextStyle(color: Colors.teal,fontSize: 20,fontWeight: FontWeight.bold)),
+          ),
+          Image.asset('assets/vertical_divider.png', width:10),
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => SearchById()),
+              );
+            },
+            child: Text('Search By ID',style: TextStyle(color: Colors.teal,fontSize: 20,fontWeight: FontWeight.bold)),
+          ),
+          Image.asset('assets/vertical_divider.png', width:10),
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => SearchByDate()),
+              );
+            },
+            child: Text('Search By Date',style: TextStyle(color: Colors.teal,fontSize: 20,fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+      IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              showDialog(
+                barrierColor: Colors.black.withOpacity(0.5),
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor:
+                        Theme.of(context).appBarTheme.backgroundColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    content: Container(
+                      width: 300,
+                      height: 400,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 50,
+                            backgroundImage: AssetImage(
+                                'assets/profile_image_light.png'), // Replace with your profile image path
+                          ),
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Name:',
+                                style:
+                                    TextStyle(fontSize: 18, color: Colors.grey),
+                              ),
+                              Text(
+                                'Olivia Starkey',
+                                style:
+                                    TextStyle(fontSize: 18, color: Colors.teal),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Role:',
+                                style:
+                                    TextStyle(fontSize: 18, color: Colors.grey),
+                              ),
+                              Text(
+                                'Manager',
+                                style:
+                                    TextStyle(fontSize: 18, color: Colors.teal),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {
+                              _logout(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 10),
+                            ),
+                            child: Text(
+                              'Logout',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+    
+    ],
+  ),
+
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(30.0),
         child: GridView.count(
           crossAxisCount: 2,
-          crossAxisSpacing: 16.0,
-          mainAxisSpacing: 16.0,
+          crossAxisSpacing: 32.0,
+          mainAxisSpacing: 32.0,
+          childAspectRatio: 5 / 2, // Adjust the aspect ratio to make the cards smaller
           children: [
             InfoCard(
               title: 'TODAYS NEW USERS',
@@ -192,25 +271,26 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 20,
       decoration: BoxDecoration(
         color: Colors.teal[800],
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: Colors.teal[700]!),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               title,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 8),
             Expanded(child: content),
           ],
         ),
@@ -228,13 +308,13 @@ class UserRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: 2.0), // Adjust the vertical padding
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(name, style: TextStyle(color: Colors.white, fontSize: 8)),
-          Text(email, style: TextStyle(color: Colors.white, fontSize: 8)),
-          Icon(Icons.arrow_forward_ios, color: Colors.white, size: 8),
+          Text(name, style: TextStyle(color: Colors.white, fontSize: 10)), // Adjust the font size
+          Text(email, style: TextStyle(color: Colors.white, fontSize: 10)), // Adjust the font size
+          Icon(Icons.arrow_forward_ios, color: Colors.white, size: 10), // Adjust the icon size
         ],
       ),
     );

@@ -73,6 +73,9 @@ flutter:
         - assets/darkmode_icon.png
         - assets/Cubtale watermark.png
         - assets/vertical_divider.png
+        - assets/profile_image_dark.png
+        - assets/profile_image_light.png
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
