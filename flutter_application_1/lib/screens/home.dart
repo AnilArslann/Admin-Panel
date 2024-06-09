@@ -27,8 +27,20 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
     await prefs.remove('expiryDate');
+    Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(
+      builder: (context) => LoginPage(
+        isDarkTheme: _isDarkTheme,
+        onToggleTheme: _toggleTheme,
+      ),
+    ),
+    (Route<dynamic> route) => false,
+  );
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(isDarkTheme: (ThemeMode.system==ThemeMode.dark), onToggleTheme: (){})));
+
+  
+
 
   }
 
@@ -88,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       IconButton(
-            icon: Icon(Icons.menu),
+            icon: Icon(Icons.menu,size: 40,color: Colors.teal,),
             onPressed: () {
               showDialog(
                 barrierColor: Colors.black.withOpacity(0.5),
