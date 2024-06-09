@@ -94,7 +94,7 @@ class _SearchByMailState extends State<SearchByMail> {
         ],
       ),
       IconButton(
-            icon: Icon(Icons.menu),
+            icon: Icon(Icons.menu,size: 40,color: Colors.teal,),
             onPressed: () {
               showDialog(
                 barrierColor: Colors.black.withOpacity(0.5),
