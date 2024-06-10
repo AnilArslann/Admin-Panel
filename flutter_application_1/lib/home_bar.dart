@@ -10,16 +10,16 @@ class CustomHomeBar extends StatefulWidget implements PreferredSizeWidget {
   _CustomHomeBarState createState() => _CustomHomeBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(100); // Match the custom toolbar height
+  Size get preferredSize => const Size.fromHeight(100); // Match the custom toolbar height
 }
 
 class _CustomHomeBarState extends State<CustomHomeBar> {
   Future<void> _logout(BuildContext context) async {
-    bool _isDarkTheme = (ThemeMode.system == ThemeMode.dark);
+    bool isDarkTheme = (ThemeMode.system == ThemeMode.dark);
 
-    void _toggleTheme() {
+    void toggleTheme() {
       setState(() {
-        _isDarkTheme = !_isDarkTheme;
+        isDarkTheme = !isDarkTheme;
       });
     }
 
@@ -32,8 +32,8 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
       context,
       MaterialPageRoute(
         builder: (context) => LoginPage(
-          isDarkTheme: _isDarkTheme,
-          onToggleTheme: _toggleTheme,
+          isDarkTheme: isDarkTheme,
+          onToggleTheme: toggleTheme,
         ),
       ),
       (Route<dynamic> route) => false,
@@ -53,7 +53,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                 'assets/cubtale logo1.png',
                 height: 60,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Image.asset(
                 'assets/Cubtale watermark.png',
                 height: 60,
@@ -70,7 +70,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                     MaterialPageRoute(builder: (context) => SearchByMail()),
                   );
                 },
-                child: Text(
+                child: const Text(
                   'Search By Mail',
                   style: TextStyle(
                       color: Colors.teal,
@@ -86,7 +86,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                     MaterialPageRoute(builder: (context) => SearchById()),
                   );
                 },
-                child: Text(
+                child: const Text(
                   'Search By ID',
                   style: TextStyle(
                       color: Colors.teal,
@@ -102,7 +102,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                     MaterialPageRoute(builder: (context) => SearchByDate()),
                   );
                 },
-                child: Text(
+                child: const Text(
                   'Search By Date',
                   style: TextStyle(
                       color: Colors.teal,
@@ -113,7 +113,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
             ],
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.menu,
               size: 40,
               color: Colors.teal,
@@ -135,13 +135,13 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(
+                         const  CircleAvatar(
                             radius: 50,
                             backgroundImage: AssetImage(
                                 'assets/profile_image_light.png'), // Replace with your profile image path
                           ),
-                          SizedBox(height: 20),
-                          Row(
+                          const SizedBox(height: 20),
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -156,8 +156,8 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
-                          Row(
+                          const SizedBox(height: 10),
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -172,7 +172,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {
                               _logout(context);
@@ -181,10 +181,10 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 10),
                             ),
-                            child: Text(
+                            child: const Text(
                               'Logout',
                               style: TextStyle(color: Colors.white),
                             ),

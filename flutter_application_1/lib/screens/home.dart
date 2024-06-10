@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../home_bar.dart';
-import 'login.dart';
-import 'search_email.dart';
-import 'search_id.dart';
-import 'search_date.dart';
 import '../home_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,33 +10,7 @@ class _HomePageState extends State<HomePage> {
   bool isHorizontal = true;
   
 
-  Future<void> _logout(BuildContext context) async {
-    bool _isDarkTheme = (ThemeMode.system==ThemeMode.dark);
-    void _toggleTheme() {
-    setState(() {
-      _isDarkTheme = !_isDarkTheme;
-    });
-  }
-    // Delete the token from local storage
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    await prefs.remove('expiryDate');
-    Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(
-      builder: (context) => LoginPage(
-        isDarkTheme: _isDarkTheme,
-        onToggleTheme: _toggleTheme,
-      ),
-    ),
-    (Route<dynamic> route) => false,
-  );
 
-
-  
-
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,13 +48,13 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Custom Menu'),
+          title: const Text('Custom Menu'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset('assets/cubtale logo1.png', height: 60),
-              SizedBox(height: 10),
-              Text('Additional information'),
+              const SizedBox(height: 10),
+              const Text('Additional information'),
             ],
           ),
           actions: [
@@ -95,7 +62,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: const Text('Close'),
             ),
           ],
         );
@@ -126,7 +93,7 @@ class _CustomThreeLinesIconState extends State<CustomThreeLinesIcon> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(3, (index) {
             return Container(
-              margin: EdgeInsets.symmetric(vertical: 2.0),
+              margin:const  EdgeInsets.symmetric(vertical: 2.0),
               height: 4.0,
               width: 24.0,
               color: Colors.teal,
@@ -160,13 +127,13 @@ class InfoCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Expanded(child: content),
           ],
         ),
@@ -188,9 +155,9 @@ class UserRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(name, style: TextStyle(color: Colors.white, fontSize: 10)), // Adjust the font size
-          Text(email, style: TextStyle(color: Colors.white, fontSize: 10)), // Adjust the font size
-          Icon(Icons.arrow_forward_ios, color: Colors.white, size: 10), // Adjust the icon size
+          Text(name, style: const TextStyle(color: Colors.white, fontSize: 10)), // Adjust the font size
+          Text(email, style: const TextStyle(color: Colors.white, fontSize: 10)), // Adjust the font size
+          const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 10), // Adjust the icon size
         ],
       ),
     );

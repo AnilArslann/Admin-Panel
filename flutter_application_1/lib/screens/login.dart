@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/widgets.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'home.dart';
@@ -55,10 +54,9 @@ class _LoginPageState extends State<LoginPage> {
     }
     */
 
-    final String token = 'test_token';
-    print('Login successful: $token');
+    const String token = 'test_token';
     final DateTime now = DateTime.now();
-    final DateTime expiryDate = now.add(Duration(days: 14));
+    final DateTime expiryDate = now.add(const Duration(days: 14));
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
@@ -81,24 +79,24 @@ void _showErrorDialog(String message) {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Image.asset('assets/oops_icon.png'),
-              SizedBox(height: 48),
+              const SizedBox(height: 48),
               Text(
                 message,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.teal,
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                 ),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               Center(
                 // Wrap the ElevatedButton with Center
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).cardColor,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(24.0), // Adjust border radius for top-left corner
                         topRight: Radius.circular(8.0), // Adjust border radius for top-right corner
@@ -115,8 +113,8 @@ void _showErrorDialog(String message) {
                     Navigator.of(context).pop();
                   },
                   child: Container( // Wrap the text with a container to set padding
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10), // Adjust padding as needed
-                    child: Text(
+                    padding:const  EdgeInsets.symmetric(horizontal: 10, vertical: 10), // Adjust padding as needed
+                    child: const Text(
                       'Try Again',
                       style: TextStyle(fontSize: 20,color:Color.fromARGB(255, 194, 84, 121)), // Adjust text size as needed
                     ),
@@ -143,7 +141,7 @@ void _showErrorDialog(String message) {
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Center(
           child: Container(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             width: 800,
             height: 500,
             decoration: BoxDecoration(
@@ -182,14 +180,14 @@ void _showErrorDialog(String message) {
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     onPressed: _login,
-                    child: Text('Login', style: Theme.of(context).textTheme.bodyLarge),
                     style: ElevatedButton.styleFrom(
-                      fixedSize: Size(200, 70),
+                      fixedSize: const Size(200, 70),
                       backgroundColor: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
+                    child: Text('Login', style: Theme.of(context).textTheme.bodyLarge),
                   ),
                 ),
               ],

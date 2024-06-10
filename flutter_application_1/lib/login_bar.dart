@@ -10,7 +10,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   _CustomAppBarState createState() => _CustomAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(100);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
@@ -24,7 +24,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
             'assets/cubtale logo1.png',
             height: 60,
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Image.asset('assets/Cubtale watermark.png', height: 60),
         ],
       ),
@@ -39,7 +39,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         ),
         Text(
           widget.isDarkTheme ? 'Dark Mode' : 'Light Mode',
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
       ],
     );

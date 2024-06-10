@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'search_email.dart';
-import 'search_date.dart';
-import 'login.dart';
 import '../home_bar.dart';
 
 class SearchById extends StatefulWidget {
@@ -21,21 +18,7 @@ class _SearchByIdState extends State<SearchById> {
       infoText = 'Showing results for: $email'; // Update with actual search results
     });
   }
-  Future<void> _logout(BuildContext context) async {
-    bool _isDarkTheme = (ThemeMode.system==ThemeMode.dark);
-    void _toggleTheme() {
-    setState(() {
-      _isDarkTheme = !_isDarkTheme;
-    });
-  }
-    // Delete the token from local storage
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    await prefs.remove('expiryDate');
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(isDarkTheme: (ThemeMode.system==ThemeMode.dark), onToggleTheme: (){})));
-
-  }
   
   @override
   Widget build(BuildContext context) {
@@ -43,7 +26,7 @@ class _SearchByIdState extends State<SearchById> {
       appBar: CustomHomeBar(),
       body: Center(
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           width: 800,
           height: 600,
           decoration: BoxDecoration(
@@ -53,13 +36,13 @@ class _SearchByIdState extends State<SearchById> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Center(
+              const Center(
                 child: Text(
                   'Search by Id',
                   style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.teal),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
@@ -75,20 +58,20 @@ class _SearchByIdState extends State<SearchById> {
                       },
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: () {
                       performSearch('sample@example.com');
                     },
-                    child: Text('Search'),
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      textStyle: TextStyle(fontSize: 20),
+                      padding:const  EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      textStyle: const TextStyle(fontSize: 20),
                     ),
+                    child: const Text('Search'),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               if (showInfo)
                 Column(
                   children: [
@@ -96,8 +79,8 @@ class _SearchByIdState extends State<SearchById> {
                       Image.asset('assets/profile_image_dark.png', height: 200)
                     else
                       Image.asset('assets/profile_image_light.png', height: 200),
-                    SizedBox(height: 20),
-                    Row(
+                    const SizedBox(height: 20),
+                    const Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
