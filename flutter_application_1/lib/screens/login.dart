@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'home.dart';
 import '../login_bar.dart';
 import '../theme.dart';
+import '../page_transition.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -61,7 +62,8 @@ class _LoginPageState extends State<LoginPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
     await prefs.setString('expiryDate', expiryDate.toIso8601String());
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+    Navigator.pushReplacement(context,NoTransitionPageRoute(page: HomePage()));
+                        
 
   }
 
@@ -98,10 +100,10 @@ void _showErrorDialog(String message) {
                     backgroundColor: Theme.of(context).cardColor,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24.0), // Adjust border radius for top-left corner
-                        topRight: Radius.circular(8.0), // Adjust border radius for top-right corner
-                        bottomRight: Radius.circular(24.0), // Adjust border radius for bottom-right corner
-                        bottomLeft: Radius.circular(24.0), // Adjust border radius for bottom-left corner
+                        topLeft: Radius.circular(24.0), 
+                        topRight: Radius.circular(8.0), 
+                        bottomRight: Radius.circular(24.0), 
+                        bottomLeft: Radius.circular(24.0), 
                       ),
                       side: BorderSide(
                         color: Color.fromARGB(255, 233, 117, 156),

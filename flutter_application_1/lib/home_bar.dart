@@ -4,6 +4,7 @@ import 'screens/search_id.dart';
 import 'screens/search_date.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/login.dart';
+import 'page_transition.dart';
 
 class CustomHomeBar extends StatefulWidget implements PreferredSizeWidget {
   @override
@@ -30,12 +31,10 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(
-        builder: (context) => LoginPage(
-          isDarkTheme: isDarkTheme,
-          onToggleTheme: toggleTheme,
-        ),
-      ),
+      NoTransitionPageRoute(page: LoginPage(
+        isDarkTheme: isDarkTheme,
+        onToggleTheme: toggleTheme,
+      )),
       (Route<dynamic> route) => false,
     );
   }
@@ -67,7 +66,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => SearchByMail()),
+                    NoTransitionPageRoute(page: SearchByMail()),
                   );
                 },
                 child: const Text(
@@ -83,7 +82,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => SearchById()),
+                    NoTransitionPageRoute(page: SearchById()),
                   );
                 },
                 child: const Text(
@@ -99,7 +98,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => SearchByDate()),
+                    NoTransitionPageRoute(page: SearchByDate()),
                   );
                 },
                 child: const Text(
@@ -135,7 +134,7 @@ class _CustomHomeBarState extends State<CustomHomeBar> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                         const  CircleAvatar(
+                          const CircleAvatar(
                             radius: 50,
                             backgroundImage: AssetImage(
                                 'assets/profile_image_light.png'), // Replace with your profile image path

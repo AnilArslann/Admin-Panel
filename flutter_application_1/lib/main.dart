@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/login.dart';
 import 'screens/home.dart';
+import 'screens/search_email.dart'; // Import the other screens
+import 'screens/search_id.dart';
+import 'screens/search_date.dart';
 import 'theme.dart';
 
 void main() {
@@ -14,8 +17,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isDarkTheme = (ThemeMode.system==ThemeMode.dark);
+  bool _isDarkTheme = (ThemeMode.system == ThemeMode.dark);
   bool _isLoggedIn = false;
+
   @override
   void initState() {
     super.initState();
@@ -30,7 +34,6 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-
   void _toggleTheme() {
     setState(() {
       _isDarkTheme = !_isDarkTheme;
@@ -44,10 +47,17 @@ class _MyAppState extends State<MyApp> {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: _isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-      home: _isLoggedIn? HomePage():LoginPage(
-        isDarkTheme: _isDarkTheme,
-        onToggleTheme: _toggleTheme,
-      ),
+      initialRoute: _isLoggedIn ? '/home' : '/login',
+      routes: {
+        '/login': (context) => LoginPage(
+          isDarkTheme: _isDarkTheme,
+          onToggleTheme: _toggleTheme,
+        ),
+        '/home': (context) => HomePage(),
+        '/search_email': (context) => SearchByMail(),
+        '/search_id': (context) => SearchById(),
+        '/search_date': (context) => SearchByDate(),
+      },
     );
   }
 }
